@@ -1,0 +1,74 @@
+-- Q08: Custom labels for a user
+-- SQL: SELECT cl.name, cl.color FROM custom_labels cl JOIN users u ON cl.user_id = u.id WHERE u.email = 'user1@vnuemail.local';
+
+-- Run 1
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=4.58..23.57 rows=4 width=15) (actual time=0.011..0.011 rows=4.00 loops=1)
+   Buffers: shared hit=6
+   ->  Index Scan using users_email_key on users u  (cost=0.27..8.29 rows=1 width=16) (actual time=0.006..0.006 rows=1.00 loops=1)
+         Index Cond: (email = 'user1@vnuemail.local'::text)
+         Index Searches: 1
+         Buffers: shared hit=3
+   ->  Bitmap Heap Scan on custom_labels cl  (cost=4.31..15.24 rows=4 width=31) (actual time=0.005..0.005 rows=4.00 loops=1)
+         Recheck Cond: (user_id = u.id)
+         Heap Blocks: exact=1
+         Buffers: shared hit=3
+         ->  Bitmap Index Scan on custom_labels_user_id_name_key  (cost=0.00..4.31 rows=4 width=0) (actual time=0.001..0.001 rows=4.00 loops=1)
+               Index Cond: (user_id = u.id)
+               Index Searches: 1
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=294
+ Planning Time: 0.379 ms
+ Execution Time: 0.031 ms
+(18 rows)
+
+
+-- Run 2
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=4.58..23.57 rows=4 width=15) (actual time=0.011..0.011 rows=4.00 loops=1)
+   Buffers: shared hit=6
+   ->  Index Scan using users_email_key on users u  (cost=0.27..8.29 rows=1 width=16) (actual time=0.005..0.005 rows=1.00 loops=1)
+         Index Cond: (email = 'user1@vnuemail.local'::text)
+         Index Searches: 1
+         Buffers: shared hit=3
+   ->  Bitmap Heap Scan on custom_labels cl  (cost=4.31..15.24 rows=4 width=31) (actual time=0.005..0.005 rows=4.00 loops=1)
+         Recheck Cond: (user_id = u.id)
+         Heap Blocks: exact=1
+         Buffers: shared hit=3
+         ->  Bitmap Index Scan on custom_labels_user_id_name_key  (cost=0.00..4.31 rows=4 width=0) (actual time=0.001..0.001 rows=4.00 loops=1)
+               Index Cond: (user_id = u.id)
+               Index Searches: 1
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=294
+ Planning Time: 0.361 ms
+ Execution Time: 0.031 ms
+(18 rows)
+
+
+-- Run 3
+                                                                   QUERY PLAN                                                                   
+------------------------------------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=4.58..23.57 rows=4 width=15) (actual time=0.010..0.011 rows=4.00 loops=1)
+   Buffers: shared hit=6
+   ->  Index Scan using users_email_key on users u  (cost=0.27..8.29 rows=1 width=16) (actual time=0.005..0.006 rows=1.00 loops=1)
+         Index Cond: (email = 'user1@vnuemail.local'::text)
+         Index Searches: 1
+         Buffers: shared hit=3
+   ->  Bitmap Heap Scan on custom_labels cl  (cost=4.31..15.24 rows=4 width=31) (actual time=0.004..0.005 rows=4.00 loops=1)
+         Recheck Cond: (user_id = u.id)
+         Heap Blocks: exact=1
+         Buffers: shared hit=3
+         ->  Bitmap Index Scan on custom_labels_user_id_name_key  (cost=0.00..4.31 rows=4 width=0) (actual time=0.001..0.001 rows=4.00 loops=1)
+               Index Cond: (user_id = u.id)
+               Index Searches: 1
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=294
+ Planning Time: 0.352 ms
+ Execution Time: 0.029 ms
+(18 rows)
+

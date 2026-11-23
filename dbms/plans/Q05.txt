@@ -1,0 +1,56 @@
+-- Q05: Starred messages for a user
+-- SQL: SELECT id, sender, subject, created_at FROM messages WHERE 'user1@vnuemail.local' = ANY(recipient) AND recipient_starred = TRUE ORDER BY created_at DESC;
+
+-- Run 1
+                                                 QUERY PLAN                                                  
+-------------------------------------------------------------------------------------------------------------
+ Sort  (cost=94.51..94.52 rows=1 width=62) (actual time=0.151..0.151 rows=0.00 loops=1)
+   Sort Key: created_at DESC
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=75
+   ->  Seq Scan on messages  (cost=0.00..94.50 rows=1 width=62) (actual time=0.143..0.143 rows=0.00 loops=1)
+         Filter: (recipient_starred AND ('user1@vnuemail.local'::text = ANY (recipient)))
+         Rows Removed by Filter: 2000
+         Buffers: shared hit=72
+ Planning:
+   Buffers: shared hit=245
+ Planning Time: 0.266 ms
+ Execution Time: 0.166 ms
+(12 rows)
+
+
+-- Run 2
+                                                 QUERY PLAN                                                  
+-------------------------------------------------------------------------------------------------------------
+ Sort  (cost=94.51..94.52 rows=1 width=62) (actual time=0.158..0.158 rows=0.00 loops=1)
+   Sort Key: created_at DESC
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=75
+   ->  Seq Scan on messages  (cost=0.00..94.50 rows=1 width=62) (actual time=0.150..0.150 rows=0.00 loops=1)
+         Filter: (recipient_starred AND ('user1@vnuemail.local'::text = ANY (recipient)))
+         Rows Removed by Filter: 2000
+         Buffers: shared hit=72
+ Planning:
+   Buffers: shared hit=245
+ Planning Time: 0.277 ms
+ Execution Time: 0.174 ms
+(12 rows)
+
+
+-- Run 3
+                                                 QUERY PLAN                                                  
+-------------------------------------------------------------------------------------------------------------
+ Sort  (cost=94.51..94.52 rows=1 width=62) (actual time=0.179..0.179 rows=0.00 loops=1)
+   Sort Key: created_at DESC
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=75
+   ->  Seq Scan on messages  (cost=0.00..94.50 rows=1 width=62) (actual time=0.169..0.169 rows=0.00 loops=1)
+         Filter: (recipient_starred AND ('user1@vnuemail.local'::text = ANY (recipient)))
+         Rows Removed by Filter: 2000
+         Buffers: shared hit=72
+ Planning:
+   Buffers: shared hit=245
+ Planning Time: 0.338 ms
+ Execution Time: 0.196 ms
+(12 rows)
+

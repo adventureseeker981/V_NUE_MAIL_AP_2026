@@ -1,0 +1,56 @@
+-- Q10: Messages received in last 24 hours
+-- SQL: SELECT COUNT(*) AS recent_count FROM messages WHERE 'user1@vnuemail.local' = ANY(recipient) AND created_at >= NOW() - INTERVAL '24 hours';
+
+-- Run 1
+                                                                QUERY PLAN                                                                 
+-------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.73..8.74 rows=1 width=8) (actual time=0.009..0.009 rows=1.00 loops=1)
+   Buffers: shared hit=3
+   ->  Index Scan using idx_messages_created_at on messages  (cost=0.28..8.73 rows=1 width=0) (actual time=0.007..0.007 rows=0.00 loops=1)
+         Index Cond: (created_at >= (now() - '24:00:00'::interval))
+         Filter: ('user1@vnuemail.local'::text = ANY (recipient))
+         Rows Removed by Filter: 23
+         Index Searches: 1
+         Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=210
+ Planning Time: 0.398 ms
+ Execution Time: 0.028 ms
+(12 rows)
+
+
+-- Run 2
+                                                                QUERY PLAN                                                                 
+-------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.73..8.74 rows=1 width=8) (actual time=0.007..0.007 rows=1.00 loops=1)
+   Buffers: shared hit=3
+   ->  Index Scan using idx_messages_created_at on messages  (cost=0.28..8.73 rows=1 width=0) (actual time=0.005..0.005 rows=0.00 loops=1)
+         Index Cond: (created_at >= (now() - '24:00:00'::interval))
+         Filter: ('user1@vnuemail.local'::text = ANY (recipient))
+         Rows Removed by Filter: 23
+         Index Searches: 1
+         Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=210
+ Planning Time: 0.294 ms
+ Execution Time: 0.025 ms
+(12 rows)
+
+
+-- Run 3
+                                                                QUERY PLAN                                                                 
+-------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=8.73..8.74 rows=1 width=8) (actual time=0.007..0.007 rows=1.00 loops=1)
+   Buffers: shared hit=3
+   ->  Index Scan using idx_messages_created_at on messages  (cost=0.28..8.73 rows=1 width=0) (actual time=0.005..0.005 rows=0.00 loops=1)
+         Index Cond: (created_at >= (now() - '24:00:00'::interval))
+         Filter: ('user1@vnuemail.local'::text = ANY (recipient))
+         Rows Removed by Filter: 23
+         Index Searches: 1
+         Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=210
+ Planning Time: 0.285 ms
+ Execution Time: 0.026 ms
+(12 rows)
+

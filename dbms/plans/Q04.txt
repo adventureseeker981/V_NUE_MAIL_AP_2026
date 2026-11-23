@@ -1,0 +1,53 @@
+-- Q04: Subject keyword search
+-- SQL: SELECT id, sender, subject, created_at FROM messages WHERE subject ILIKE '%Subject line 1%' ORDER BY created_at DESC LIMIT 20;
+
+-- Run 1
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.28..2.83 rows=20 width=62) (actual time=0.007..0.048 rows=20.00 loops=1)
+   Buffers: shared hit=6
+   ->  Index Scan using idx_messages_created_at on messages  (cost=0.28..142.28 rows=1111 width=62) (actual time=0.006..0.047 rows=20.00 loops=1)
+         Filter: (subject ~~* '%Subject line 1%'::text)
+         Rows Removed by Filter: 88
+         Index Searches: 1
+         Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=158
+ Planning Time: 1.106 ms
+ Execution Time: 0.059 ms
+(11 rows)
+
+
+-- Run 2
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.28..2.83 rows=20 width=62) (actual time=0.006..0.049 rows=20.00 loops=1)
+   Buffers: shared hit=6
+   ->  Index Scan using idx_messages_created_at on messages  (cost=0.28..142.28 rows=1111 width=62) (actual time=0.006..0.048 rows=20.00 loops=1)
+         Filter: (subject ~~* '%Subject line 1%'::text)
+         Rows Removed by Filter: 88
+         Index Searches: 1
+         Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=158
+ Planning Time: 0.272 ms
+ Execution Time: 0.061 ms
+(11 rows)
+
+
+-- Run 3
+                                                                    QUERY PLAN                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.28..2.83 rows=20 width=62) (actual time=0.007..0.051 rows=20.00 loops=1)
+   Buffers: shared hit=6
+   ->  Index Scan using idx_messages_created_at on messages  (cost=0.28..142.28 rows=1111 width=62) (actual time=0.006..0.049 rows=20.00 loops=1)
+         Filter: (subject ~~* '%Subject line 1%'::text)
+         Rows Removed by Filter: 88
+         Index Searches: 1
+         Buffers: shared hit=6
+ Planning:
+   Buffers: shared hit=158
+ Planning Time: 0.302 ms
+ Execution Time: 0.062 ms
+(11 rows)
+

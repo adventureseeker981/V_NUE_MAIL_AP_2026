@@ -1,0 +1,62 @@
+-- Q03: Sent messages by a user
+-- SQL: SELECT id, recipient, subject, created_at FROM messages WHERE sender = 'user1@vnuemail.local' AND sender_deleted = FALSE ORDER BY created_at DESC LIMIT 50;
+
+-- Run 1
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=97.01..97.02 rows=1 width=89) (actual time=0.187..0.188 rows=0.00 loops=1)
+   Buffers: shared hit=75
+   ->  Sort  (cost=97.01..97.02 rows=1 width=89) (actual time=0.187..0.187 rows=0.00 loops=1)
+         Sort Key: created_at DESC
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=75
+         ->  Seq Scan on messages  (cost=0.00..97.00 rows=1 width=89) (actual time=0.180..0.180 rows=0.00 loops=1)
+               Filter: ((NOT sender_deleted) AND (sender = 'user1@vnuemail.local'::text))
+               Rows Removed by Filter: 2000
+               Buffers: shared hit=72
+ Planning:
+   Buffers: shared hit=194
+ Planning Time: 0.295 ms
+ Execution Time: 0.201 ms
+(14 rows)
+
+
+-- Run 2
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=97.01..97.02 rows=1 width=89) (actual time=0.217..0.217 rows=0.00 loops=1)
+   Buffers: shared hit=75
+   ->  Sort  (cost=97.01..97.02 rows=1 width=89) (actual time=0.216..0.216 rows=0.00 loops=1)
+         Sort Key: created_at DESC
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=75
+         ->  Seq Scan on messages  (cost=0.00..97.00 rows=1 width=89) (actual time=0.209..0.209 rows=0.00 loops=1)
+               Filter: ((NOT sender_deleted) AND (sender = 'user1@vnuemail.local'::text))
+               Rows Removed by Filter: 2000
+               Buffers: shared hit=72
+ Planning:
+   Buffers: shared hit=194
+ Planning Time: 0.289 ms
+ Execution Time: 0.229 ms
+(14 rows)
+
+
+-- Run 3
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=97.01..97.02 rows=1 width=89) (actual time=0.186..0.186 rows=0.00 loops=1)
+   Buffers: shared hit=75
+   ->  Sort  (cost=97.01..97.02 rows=1 width=89) (actual time=0.186..0.186 rows=0.00 loops=1)
+         Sort Key: created_at DESC
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=75
+         ->  Seq Scan on messages  (cost=0.00..97.00 rows=1 width=89) (actual time=0.178..0.178 rows=0.00 loops=1)
+               Filter: ((NOT sender_deleted) AND (sender = 'user1@vnuemail.local'::text))
+               Rows Removed by Filter: 2000
+               Buffers: shared hit=72
+ Planning:
+   Buffers: shared hit=194
+ Planning Time: 0.278 ms
+ Execution Time: 0.198 ms
+(14 rows)
+

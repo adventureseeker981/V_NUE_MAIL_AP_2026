@@ -1,0 +1,62 @@
+-- Q07: User profile and settings lookup
+-- SQL: SELECT u.email, u.display_name, s.theme, s.density, s.signature FROM users u JOIN user_settings s ON u.id = s.user_id WHERE u.email = 'user1@vnuemail.local';
+
+-- Run 1
+                                                                  QUERY PLAN                                                                  
+----------------------------------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=0.55..16.61 rows=1 width=48) (actual time=0.008..0.009 rows=1.00 loops=1)
+   Buffers: shared hit=6
+   ->  Index Scan using users_email_key on users u  (cost=0.27..8.29 rows=1 width=46) (actual time=0.006..0.007 rows=1.00 loops=1)
+         Index Cond: (email = 'user1@vnuemail.local'::text)
+         Index Searches: 1
+         Buffers: shared hit=3
+   ->  Index Scan using user_settings_pkey on user_settings s  (cost=0.27..8.29 rows=1 width=34) (actual time=0.001..0.001 rows=1.00 loops=1)
+         Index Cond: (user_id = u.id)
+         Index Searches: 1
+         Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=255
+ Planning Time: 0.337 ms
+ Execution Time: 0.028 ms
+(14 rows)
+
+
+-- Run 2
+                                                                  QUERY PLAN                                                                  
+----------------------------------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=0.55..16.61 rows=1 width=48) (actual time=0.008..0.008 rows=1.00 loops=1)
+   Buffers: shared hit=6
+   ->  Index Scan using users_email_key on users u  (cost=0.27..8.29 rows=1 width=46) (actual time=0.006..0.006 rows=1.00 loops=1)
+         Index Cond: (email = 'user1@vnuemail.local'::text)
+         Index Searches: 1
+         Buffers: shared hit=3
+   ->  Index Scan using user_settings_pkey on user_settings s  (cost=0.27..8.29 rows=1 width=34) (actual time=0.001..0.001 rows=1.00 loops=1)
+         Index Cond: (user_id = u.id)
+         Index Searches: 1
+         Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=255
+ Planning Time: 0.315 ms
+ Execution Time: 0.026 ms
+(14 rows)
+
+
+-- Run 3
+                                                                  QUERY PLAN                                                                  
+----------------------------------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=0.55..16.61 rows=1 width=48) (actual time=0.007..0.007 rows=1.00 loops=1)
+   Buffers: shared hit=6
+   ->  Index Scan using users_email_key on users u  (cost=0.27..8.29 rows=1 width=46) (actual time=0.005..0.005 rows=1.00 loops=1)
+         Index Cond: (email = 'user1@vnuemail.local'::text)
+         Index Searches: 1
+         Buffers: shared hit=3
+   ->  Index Scan using user_settings_pkey on user_settings s  (cost=0.27..8.29 rows=1 width=34) (actual time=0.001..0.001 rows=1.00 loops=1)
+         Index Cond: (user_id = u.id)
+         Index Searches: 1
+         Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=255
+ Planning Time: 0.312 ms
+ Execution Time: 0.026 ms
+(14 rows)
+
