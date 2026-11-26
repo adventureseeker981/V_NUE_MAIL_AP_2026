@@ -14,7 +14,7 @@
 ## Timing Table
 
 | Query | Type | What it does | Run 1 (ms) | Run 2 (ms) | Run 3 (ms) | Average (ms) | Scan type |
-|-------|------|--------------|----------:|----------:|----------:|-------------:|-----------|
+|---|---|---|---:|---:|---:|---:|---|
 | R1 | READ | Inbox: messages received by a user (not deleted/trashed), newest first | 0.503 | 0.318 | 0.314 | 0.378 | Seq Scan on messages |
 | R2 | READ | Unread count per user (top 20) | 2.160 | 1.877 | 1.828 | 1.955 | Seq Scan on messages + Index Only Scan on users |
 | R3 | READ | Sent messages by a user, newest first | 0.201 | 0.229 | 0.198 | 0.209 | Seq Scan on messages |
